@@ -14,7 +14,7 @@
         </div>
         
         <div ng-app="ohm-delivery">
-            <form ng-controller="tracking" ng-submit="findByTrackingId()">
+            <form ng-controller="tracking" ng-submit="findByTrackingId(e)">
                 <p>
                     <label><input id="tracking" type="text" ng-model="trackingId" placeholder="Enter your tracking id"/></label>
                 </p>
@@ -22,8 +22,8 @@
                     <button id="formBtn" type="submit">Submit</button>
                 </p>
                 <p>
-                    <span ng-if="errorMessage">{{errorMessage}}</span>
-                    <span ng-if="ohm">...{{ohm}}</span>
+                    <span ng-if="viewModel.errorMessage">{{viewModel.errorMessage}}</span>
+                    <span ng-if="viewModel.ohm">...{{viewModel.ohm}}</span>
                 </p>
             </form>
         </div>
