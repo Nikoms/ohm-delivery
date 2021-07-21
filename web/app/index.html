@@ -14,18 +14,24 @@
         </div>
         
         <div ng-app="ohm-delivery">
-            <form ng-controller="tracking" ng-submit="findByTrackingId(e)">
-                <p>
-                    <label><input id="tracking" type="text" ng-model="trackingId" placeholder="Enter your tracking id"/></label>
-                </p>
-                <p>
-                    <button id="formBtn" type="submit">Submit</button>
-                </p>
-                <p>
-                    <span ng-if="viewModel.errorMessage">{{viewModel.errorMessage}}</span>
-                    <span ng-if="viewModel.ohm">...{{viewModel.ohm}}</span>
-                </p>
-            </form>
+            <div ng-controller="tracking">
+                <form ng-submit="findByTrackingId(e)">
+                    <p>
+                        <label><input id="tracking" type="text" ng-model="trackingId" placeholder="Enter your tracking id"/></label>
+                    </p>
+                    <p>
+                        <button id="formBtn" type="submit">Submit</button>
+                    </p>
+                </form>
+                <span ng-if="viewModel.errorMessage">{{viewModel.errorMessage}}</span>
+                <div ng-if="viewModel.ohm">
+                    <span>{{viewModel.ohm}}</span>
+                    <div>
+                        <button ng-click="markAsDelivered()" ng-disabled="!viewModel.ohm.canBeFinalized">Mark as delivered</button>
+                        <button ng-click="markAsRefused()" ng-disabled="!viewModel.ohm.canBeFinalized">Mark as Refused</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>

@@ -9,7 +9,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest ./__test__/",
+    "test": "jest",
     "start": "node ./src/index.js"
   },
   "author": "Urbantz S.A.",

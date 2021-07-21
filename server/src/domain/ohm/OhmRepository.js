@@ -8,17 +8,24 @@ class OhmRepository {
 
   /**
    * @param {string} id
-   * @return {Promise<*>}
+   * @return {Promise<import("./Ohm").Ohm|undefined>}
    */
   async getOhmById(id){
     methodMustBeImplemented(id);
   }
   /**
    * @param {string} id
-   * @return {Promise<*>}
+   * @return {Promise<import("./Ohm").Ohm|undefined>}
    */
   async getOhmByTrackingId(id){
     methodMustBeImplemented(id);
+  }
+  /**
+   * @param {import("./Ohm").Ohm} ohm
+   * @return {Promise<void>}
+   */
+  async save(ohm){
+    methodMustBeImplemented(ohm);
   }
 }
 

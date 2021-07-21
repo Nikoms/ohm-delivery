@@ -1,13 +1,14 @@
 const {OhmRepository} = require('../OhmRepository');
 const low = require('lowdb');
 const FileAsync = require('lowdb/adapters/FileAsync');
+const {Ohm} = require('../Ohm');
 
 
 const db = (path, config ={}) => (async () => {
   const adapter = new FileAsync(path);
-  const _db = await low(adapter);
-  await _db.defaults(config).write();
-  return _db;
+  const database = await low(adapter);
+  await database.defaults(config).write();
+  return database;
 })()
 
 class JsonOhmRepository extends OhmRepository{
@@ -19,16 +20,29 @@ class JsonOhmRepository extends OhmRepository{
     this.jsonPathname = jsonPathname;
   }
   async getOhmById(id){
-    const _db = await db(this.jsonPathname);
-    return _db.get('ohms')
+    const database = await db(this.jsonPathname);
+    const snapshot = database.get('ohms')
       .find({id})
       .value();
+    return snapshot ? Ohm.fromSnapshot(snapshot) : undefined;
   }
   async getOhmByTrackingId(trackingId){
-    const _db = await db(this.jsonPathname);
-    return _db.get('ohms')
+    const database = await db(this.jsonPathname);
+    const snapshot = database.get('ohms')
       .find({trackingId})
       .value();
+    return snapshot ? Ohm.fromSnapshot(snapshot) : undefined;
+  }
+
+  async save(ohm) {
+    const database = await db(this.jsonPathname);
+    const snapshot = ohm.toSnapshot();
+    database
+      .get('ohms')
+      .find({trackingId:snapshot.trackingId})
+      .assign(snapshot)
+      .value();
+    await database.write();
   }
 }
 
